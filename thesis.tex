@@ -1,0 +1,272 @@
+% ----------------------------------------------------------------------
+%              Latex PhD template for the University of Deusto
+% ----------------------------------------------------------------------
+
+
+%: Style file for Latex
+% Most style definitions are in the external file PhDthesisPSnPDF.
+% In this template package, it can be found in ./Latex/Classes/
+\documentclass[twoside,12pt]{Latex/Classes/PhDthesisPSnPDF}
+
+\usepackage[lined, boxed]{algorithm2e} % for algorithm figures creation.
+
+%: Macro file for Latex
+% Macros help you summarise frequently repeated Latex commands.
+% Here, they are placed in an external file /Latex/Macros/MacroFile1.tex
+% An macro that you may use frequently is the figuremacro (see introduction.tex)
+\include{Latex/Macros/Macros}
+
+
+%: ----------------------------------------------------------------------
+%:                  TITLE PAGE: name, degree,..
+% ----------------------------------------------------------------------
+% below is to generate the title page with crest and author name
+
+% Title of the dissertation
+\newcommand{\thesistitle}{Eine neue Bestimmung der Moleküldimensionen:
+A New Determination of Molecular Dimensions}
+
+%Author name
+\newcommand{\authorname}{Albert Einstein}
+
+%First advisor name
+\newcommand{\advisorname}{Dr. Alfred Kleiner}
+
+% if output to PDF then put the following in PDF header
+\ifpdf
+    \hypersetup{pdfauthor={\authorname},%
+            pdftitle={\thesistitle},%
+            pdfsubject={PhD Thesis},%
+            pdfkeywords={keyword1, keyword2, keyword3},%
+            pdfproducer={LaTeX},%
+            pdfcreator={pdfLaTeX}
+}
+\fi
+
+% ----------------------------------------------------------------------
+% This section below defines front covert (external and internal)
+% Shield logo
+\crest{\includegraphics[width=2cm]{Deusto_Shield}}
+% Full logo
+%\crest{\includegraphics[width=6cm]{UDeusto}}
+\university{Universidad de Deusto}
+\degree{Tesis doctoral presentada por }
+\author{\authorname} 
+\collegeordept{dentro del Programa de Doctorado en Física Experimental}
+\textadvisor{Dirigida por el }
+\advisor{\advisorname}
+\advisortwo{}
+\textsignaturecandidate{El doctorando}
+\textsignatureadvisor{El director}
+\cityofbirth{Bilbao}
+\degreedate{enero de 2013}
+
+% ----------------------------------------------------------------------
+       
+% turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+%trying to avoid orphan and widow lines
+\widowpenalty10000
+\clubpenalty10000
+
+% hyphenation
+%\hyphenation{so-me-thing}
+
+%: --------------------------------------------------------------
+%:                  FRONT MATTER: dedications, abstract,..
+% --------------------------------------------------------------
+
+\begin{document}
+
+\selectlanguage{spanish}
+\MejorarTraducciones
+
+% sets line spacing
+%\onehalfspacing
+
+% Watermark
+%\watermark{DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT	DRAFT}
+
+
+%: ----------------------- generate cover page ------------------------
+
+\maketitle  % command to print the title page with above variables
+
+% Title back
+\include{0_frontmatter/title_back}
+
+
+%: ----------------------- abstract ------------------------
+
+% Your institution may have specific regulations if you need an abstract and
+% where it is to be placed in the document. The default here is just after
+% title.
+
+% The original template provides and abstractseparate environment, if your
+% institution requires them to be separate. I think it's easier to print the
+% abstract from the complete thesis by restricting printing to the relevant
+% page.
+% \begin{abstractseparate}
+%   \input{Abstract/abstract}
+% \end{abstractseparate}
+
+
+%: ----------------------- tie in front matter ------------------------
+
+% The frontmatter text starts here
+\frontmatter
+
+\include{0_frontmatter/dedication}
+\include{0_frontmatter/abstract}
+\include{0_frontmatter/acknowledgement}
+
+% As abstract contains various languages we set the main language again
+\selectlanguage{spanish}
+\MejorarTraducciones
+
+%: ----------------------- contents ------------------------
+
+\setcounter{secnumdepth}{5} % organisational level that receives a numbers
+\setcounter{tocdepth}{5}    % print table of contents for level 3
+
+%You can also add extra lines to the ToC or to force extra unnumbered section
+%headings to be included. For example, if you wanted to add an entry called
+%Preface, and you didn't want the Preface to be numbered, you'd use these
+%commands:
+%\ subsection*{Preface}
+%\addcontentsline{toc}{subsection}{Preface} 
+
+\cleardoublepage
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents            % print the table of contents
+							% levels are:
+							% 0 - chapter
+							% 1 - section
+							% 2 - subsection
+							% 3 - subsection
+%: ----------------------- list of figures/tables ------------------------
+
+\listoffigures	% print list of figures
+\listoftables  % print list of tables
+
+%: ----------------------- glossary ------------------------
+
+% Tie in external source file for definitions: /0_frontmatter/glossary.tex
+% Glossary entries can also be defined in the main text. See glossary.tex
+\include{0_frontmatter/glossary}
+
+%\begin{multicols}{2} % \begin{multicols}{#columns}[header text][space]
+%\begin{footnotesize} % scriptsize(7) < footnotesize(8) < small (9) < normal (10)
+
+\printnomenclature[1.5cm] % [] = distance between entry and description
+\label{sec:glossary} % target name for links to glossary
+
+%\end{footnotesize}
+%\end{multicols}
+
+%defined commands
+\newcommand{\edistancia}[0]{\emph{distancia estimada}}
+
+%: --------------------------------------------------------------
+%:                  MAIN DOCUMENT SECTION
+% --------------------------------------------------------------
+
+% the main text starts here with the introduction, 1st chapter,...
+\mainmatter
+
+%\renewcommand{\chaptername}{} % uncomment to print only "1" not "Chapter 1"
+
+%: ----------------------- subdocuments ------------------------
+
+% Parts of the thesis are included below. Rename the files as required. But take
+% care that the paths match. You can also change the order of appearance by
+% moving the include commands.
+
+\include{1_introduction/0_index}	
+\include{2_another_chapter/0_index}
+	
+
+% --------------------------------------------------------------
+%:                  BACK MATTER: appendices, refs,..
+% --------------------------------------------------------------
+
+% the back matter: appendix and references close the thesis
+\backmatter
+
+%: ----------------------- appendix ------------------------
+
+\appendix
+\include{appendix_a/0_index}
+
+%: ----------------------- bibliography ------------------------
+
+% The section below defines how references are listed and formatted The default
+% below is 2 columns, small font, complete author names. Entries are also linked
+% back to the page number in the text and to external URL if provided in the
+% BibTex file.
+
+
+% Original version:
+
+% PhDbiblio-url2 = names small caps, title bold & hyperlinked, link to page 
+%\begin{multicols}{2} % \begin{multicols}{ # columns}[ header text][ space]
+%\begin{tiny} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
+%
+%\bibliographystyle{Latex/Classes/PhDbiblio-url2} % Title is link if provided
+%\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+%
+%\bibliography{9_backmatter/references} % adjust this to fit your BibTex file
+%
+%\end{tiny}
+%\end{multicols}
+
+% Show all bibliography entries
+%\nocite*
+
+
+% If we want bibliography backreference, use unsrt first and the desidered one after
+
+%\bibliographystyle{unsrt} % Defines the bibliography style
+
+%\bibliographystyle{alpha} % Defines the bibliography style
+\bibliographystyle{Latex/StyleBST/TeXiS}
+
+%\bibliographystyle{apa-good} % Defines the bibliography style
+%\bibliographystyle{natbib} % Defines the bibliography style
+
+%\bibliographystyle{plainurl}
+
+%\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+
+%To include the references/works cited/bibliography in your Table of Contents,
+%right before the bibliography command, use the command
+%\addcontentsline{toc}{section}{References}
+
+\bibliography{9_backmatter/references} % adjust this to fit your BibTex file
+
+% --------------------------------------------------------------
+% Various bibliography styles exit. Replace above style as desired.
+
+% in-text refs: (1) (1; 2)
+% ref list: alphabetical; author(s) in small caps; initials last name; page(s)
+%\bibliographystyle{Latex/Classes/PhDbiblio-case} % title forced lower case
+%\bibliographystyle{Latex/Classes/PhDbiblio-bold} % title as in bibtex but bold
+%\bibliographystyle{Latex/Classes/PhDbiblio-url} % bold + www link if provided
+
+%\bibliographystyle{Latex/Classes/jmb} % calls style file jmb.bst
+% in-text refs: author (year) without brackets
+% ref list: alphabetical; author(s) in normal font; last name, initials; page(s)
+
+%\bibliographystyle{plainnat} % calls style file plainnat.bst
+% in-text refs: author (year) without brackets
+% (this works with package natbib)
+
+% --------------------------------------------------------------
+
+
+%: back pages
+\include{9_backmatter/back}
+
+\end{document}

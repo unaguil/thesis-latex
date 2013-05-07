@@ -1,0 +1,54 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- Introduction file header -----------------------
+
+
+\chapter{Otro Capítulo}
+\label{cha:otro_capitulo}
+
+% the code below specifies where the figures are stored
+\ifpdf
+    \graphicspath{{2_another_chapter/figures/PNG/}{2_another_chapter/figures/PDF/}{2_another_chapter/figures/}}
+\else
+    \graphicspath{{2_another_chapter/figures/EPS/}{2_another_chapter/figures/}}
+\fi
+
+
+%------------------------------------------------------------------------- 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, tortor
+quis adipiscing malesuada, velit tellus viverra ligula, non fermentum nunc erat
+fermentum metus. Nulla et dapibus erat. Proin accumsan tristique odio, vel
+fermentum leo porttitor in. Aliquam eu urna turpis. Suspendisse ac eleifend
+enim. Vivamus a magna at felis consequat auctor vitae vel erat. Donec faucibus
+justo vel odio pulvinar id mattis arcu vulputate. Cras risus nisi, imperdiet nec
+hendrerit quis, mattis eu velit. Nunc sit amet ligula metus. Morbi magna enim,
+adipiscing mollis interdum quis, bibendum id lectus. 
+
+Como se muestra en la \tabl{tab:example} \ldots
+
+\begin{table}
+\center
+\caption{Una tabla de ejemplo}
+\begin{tabular}{|r|l|}
+  \hline
+  7C0 & hexadecimal \\
+  3700 & octal \\ \cline{2-2}
+  11111000000 & binary \\
+  \hline \hline
+  1984 & decimal \\
+  \hline
+\end{tabular}
+\label{tab:example}
+\end{table}
+
+Sed adipiscing justo fermentum tortor laoreet sed vestibulum tortor mattis.
+Vivamus a enim augue. Donec nunc metus, facilisis vitae accumsan et,
+pellentesque non lorem. Curabitur porta iaculis diam vitae varius. Duis at diam
+in urna fringilla egestas a ac felis. Aliquam semper malesuada orci, id vehicula
+mauris varius.
+
+
+% ----------------------------------------------------------------------

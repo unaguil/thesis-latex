@@ -1,0 +1,30 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- Introduction file header -----------------------
+
+
+\begin{savequote}[50mm]
+Un viaje de mil millas comienza
+con el primer paso.
+\qauthor{\textsc{Lao-tsé} (570 a.C.- 490 a.C.)}
+\end{savequote}
+
+\chapter{Introducción}
+% the code below specifies where the figures are stored
+\ifpdf
+    \graphicspath{{1_introduction/figures/PNG/}{1_introduction/figures/PDF/}{1_introduction/figures/}}
+\else
+    \graphicspath{{1_introduction/figures/EPS/}{1_introduction/figures/}}
+\fi
+
+
+%------------------------------------------------------------------------- 
+
+Como puede deducirse del trabajo de \cite{Bailey} y, posteriormente del de
+\cite{Ta}... 
+
+% ----------------------------------------------------------------------
+
+\input{1_introduction/1_motivation.tex}

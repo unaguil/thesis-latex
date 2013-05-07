@@ -1,0 +1,247 @@
+%---------------------------------------------------------------
+% Macros
+% version 3 by Igor Ruiz-Agundez 2011
+% version 2 by Jakob Suckale 2007
+% version 1 by Harish Bhanderi 2002
+%---------------------------------------------------------------
+
+% This file contains macros that can be called up from connected TeX files
+% It helps to summarise repeated code, e.g. figure insertion (see below).
+
+
+
+%---------------------------------------------------------------
+% Figures
+%---------------------------------------------------------------
+
+
+% Makes the \InsertFig macro compatible both with one or two columns
+\makeatletter
+\newlength \figwidth
+\if@twocolumn
+  \setlength \figwidth {\columnwidth}
+\else
+  \setlength \figwidth {\textwidth}
+\fi
+\makeatother
+
+% \InsertFig allows inserting figures
+% Parameters
+% 1 --> Filename
+% 2 --> Label for referencing
+% 3 --> Title describing the figure (caption)
+% 4 --> Description of the figure
+% 5 --> Figure width, range [0,1]. If parameter is left blank the figure size is not change
+% 6 --> Any other option for \includegraphics
+% Usage:
+% \InsertFig{}{}{}{}{}{}
+%
+\newcommand{\InsertFig}[6]{%
+	\ifthenelse{\isempty{#5}}%
+	{% if #1 is empty
+		\begin{figure}[htbp!]
+		\centering
+		\includegraphics[#6]{#1}%
+		\caption{#3}{\textbf{#4}}
+		\label{#2}
+		\end{figure}    
+	}
+	{% if #1 is not empty
+		\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=#5\figwidth,#6]{#1}%
+		\caption{#3}{\textbf{#4}}
+		\label{#2}
+		\end{figure}
+	}
+}
+
+%% Simple version of \InsertFig
+%\newcommand{\InsertFig}[5]{
+%  \begin{figure}[htbp]
+%   	\centering
+%    \includegraphics[width=#4\textwidth,#5]{#1}%
+%    \caption{#3}
+%    \label{#2}
+%  \end{figure}
+%}
+
+
+
+% insert a centered figure with caption
+% parameters 1:filename, 2:label, 3:title, 
+\newcommand{\figuremacro}[3]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=1\textwidth]{#1}
+		\caption[#3]{\textbf{#3}}
+		\label{#2}
+	\end{figure}
+}
+
+
+% insert a centered figure with caption and description
+% parameters 1:filename, 2:label, 3:title, 4:description
+\newcommand{\figuremacroD}[4]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=1\textwidth]{#1}
+		\caption[#3]{\textbf{#3} - #4}
+		\label{#2}
+	\end{figure}
+}
+
+% insert a centered figure with caption and description AND WIDTH
+% parameters 1:filename, 2:label, 3:title, 4:description, 5: textwidth
+% textwidth 1 means as text, 0.5 means half the width of the text
+\newcommand{\figuremacroDW}[5]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=#5\textwidth]{#1}
+		\caption[#3]{\textbf{#3} - #4}
+		\label{#2}
+	\end{figure}
+}
+
+% inserts a figure with wrapped around text; only suitable for NARROW figs
+% o is for outside on a double paged document; others: l, r, i(inside)
+% text and figure will each be half of the document width
+% note: long captions often crash with adjacent content; take care
+% in general: above 2 macro produce more reliable layout
+\newcommand{\figuremacroN}[3]{
+	\begin{wrapfigure}{o}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.48\textwidth]{#1}
+		\caption[#2]{{\small\textbf{#2} - #3}}
+		\label{#1}
+	\end{wrapfigure}
+}
+
+
+
+
+% Estas definiciones son para el comando \InsertFigBox
+\newlength{\anchoFigura}
+\newlength{\anchoFloat}
+\addtolength{\fboxsep}{2\fboxsep}
+%\renewcommand{\capfont}{\normalfont\normalcolor\sffamily\small}
+%\renewcommand{\caplabelfont}{\normalfont\normalcolor\sffamily\bfseries\small}
+
+% El comando \InsertFigBox nos permite insertar figuras en un marco
+% Los parametros son:
+% 1 --> Fichero de la imagen
+% 2 --> Etiqueta (label) para referencias
+% 3 --> Texto a pie de imagen
+% 4 -> Porcentaje del ancho de página que ocupará la figura (de 0 a 1)
+% 5 --> Opciones que queramos pasarle al \includegraphics
+\newcommand{\InsertFigBox}[5]{%
+  \setlength{\anchoFloat}{#4\textwidth}%
+  \addtolength{\anchoFloat}{-4\fboxsep}%
+  \setlength{\anchoFigura}{\anchoFloat}%
+  \begin{figure}%
+    \begin{center}%
+      \Ovalbox{%
+        \begin{minipage}{\anchoFloat}%
+          \begin{center}%
+            \includegraphics[width=\anchoFigura,#5]{#1}%
+            \caption{#3}%
+            \label{#2}%
+          \end{center}%
+        \end{minipage}
+      }%
+    \end{center}%
+  \end{figure}%
+}
+
+
+
+%---------------------------------------------------------------
+% Misc
+%---------------------------------------------------------------
+
+% predefined commands by Harish
+\newcommand{\PdfPsText}[2]{
+  \ifpdf
+     #1
+  \else
+     #2
+  \fi
+}
+
+
+%---------------------------------------------------------------
+% Locales
+%---------------------------------------------------------------
+
+
+%%
+%% Para quitar traducciones raras (Cuadros)
+%% Ha de usarse cada vez que se seleccione el idioma
+%%
+\newcommand{\MejorarTraducciones}{%
+	   \renewcommand{\contentsname}{Tabla de contenido}
+	   \renewcommand{\listfigurename}{Lista de figuras}
+	   \renewcommand{\listtablename}{Lista de tablas}
+	   \renewcommand{\tablename}{Tabla}
+	   \renewcommand{\lstlistingname}{Lista}
+	   \renewcommand{\nomname}{Acrónimos}
+	   \renewcommand{\sectionname}{Sección}
+	   \renewcommand{\acknowledgementstitle}{Agradecimientos}
+}%
+
+%%
+%% Permite referenciar figuras directamente de la forma \figurename~\ref{label}
+%%
+%%
+\newcommand{\fig}[1]{\mbox{\MakeLowercase\figurename~\ref{#1}}}
+
+%%
+%% Permite referenciar secciones directamente de la forma Sección \ref{label}
+%%
+%%
+\newcommand{\sect}[1]{\mbox{\MakeLowercase\sectionname~\ref{#1}}}
+
+%%
+%% Permite referenciar secciones directamente de la forma Capítulo \ref{label}
+%%
+%%
+\newcommand{\chap}[1]{\mbox{\MakeLowercase\chaptername~\ref{#1}}}
+
+\newcommand{\Chap}[1]{\mbox{\chaptername~\ref{#1}}}
+
+%%
+%% Permite referenciar secciones directamente de la forma Capítulo \ref{label}
+%%
+%%
+\newcommand{\tabl}[1]{\mbox{\MakeLowercase\tablename~\ref{#1}}}
+
+%:--------------------- TODO command --------------------------------
+\newcommand{\todo}[1]{\textcolor{red}{@TODO: #1}}
+
+
+%---------------------------------------------------------------
+% Source code
+%---------------------------------------------------------------
+
+
+%%
+%% Para escribir extractos de codigo
+%%
+%% Las tabulaciones se substituyen por dos espacios
+%\fvset{tabsize=2}
+%% Creamos un nuevo environment de fancyvrb para los ejemplos enmarcados
+%\DefineVerbatimEnvironment{VerbEj}{BVerbatim}{fontsize=\small,samepage=true,commandchars=\\\{\}}
+%% Colo de fondo
+%\definecolor{grisfondo}{gray}{0.9}
+%% Environment para extractos de codigo
+%\newenvironment{codigo}%
+%{\VerbatimEnvironment\begin{Sbox}\begin{VerbEj}}%
+%{\end{VerbEj}\end{Sbox}\setlength{\fboxsep}{8pt}\begin{center}\fcolorbox{black}{grisfondo}{\TheSbox}\end{center}}
+%
+%% Otro formato más bonito para código fuente
+%\newcommand{\codigofuente}[3]{%
+%  \lstinputlisting[language=#1,caption={#2}]{#3}%
+%}
+
+
+
